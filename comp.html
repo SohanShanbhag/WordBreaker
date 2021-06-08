@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>WordBeater</title>
+        <div style="background-color: black;">
+            <h1 style="color: white; text-align:center;font-family:Verdana, Geneva, Tahoma, sans-serif">WordBeater</h1>
+        </div>
+    </head>
+
+    <body style="background-color: palegoldenrod; text-align:center;font-family:Verdana, Geneva, Tahoma, sans-serif">
+        <div id="enter">
+            
+            <div>
+                <br>
+                <h2>Check how many words you can type in 60 seconds!</h2>
+                <h2>If you want to play on Mobile - <a href="mobile.html">Word Breaker Mobile</a></h2>
+                <h2>It's case sensitive</h2>
+                <br><br><br><br><br><br><br><br><br>
+                <button type="submit" class="button" onclick="play()">Start Word Mode</button>
+            </div>
+        </div>
+
+        <div id="play" style="display: none;">
+            <h2>Type the words in the Input Box</h2>
+            <h2>If your answer is correct, a new word will be generated!</h2>
+            <br>
+            <br>
+            <h2><span id="word"></span></h2>
+            <input type="text" placeholder="Enter Word" id="input-box" style="text-align: center; font-size:25px">
+            <br>
+            <br>
+            <h2>You have <span id="time">60</span> seconds remaining</h2>
+            <br>
+            <h2>Score : <span id="score">0</span></h2>
+        </div>
+
+        <div id="end" style="display: none;">
+            <h2>Awesome! You scored :<span id="final">0</span></h2>
+            <br>
+            <br>
+            <button class="button" onclick="location.reload()">Restart</button>
+        </div>
+
+        <style>
+            .button{
+                background-color: blueviolet;
+                text-align: center;
+                font-size: 45px;
+                width:300px;
+                height: 100px;
+                border: 5px;
+                transition-duration: 0.5s;
+                cursor: pointer;
+            }
+            .button:hover{
+                background-color: aqua;
+            }
+
+            input[type=text]{
+                width: 100%;
+                padding: 12px 20px;
+                margin: 8px 0;
+                box-sizing: border-box;
+                border: 2px solid red;
+                border-radius: 4px;
+            }
+        </style>
+
+        <script>
+            count=0;
+            window.addEventListener('load', init);
+            function init(){
+                generateWord(words);
+                document.getElementById('input-box').addEventListener('input', play);
+                var timeLeft = 60;
+                    var elem = document.getElementById('time');
+                    
+                    var timerId = setInterval(countdown, 1000);
+                    
+                    function countdown() {
+                        if (timeLeft == -1) {
+                            clearTimeout(timerId);
+                            document.getElementById('play').style.display = "none"
+                            document.getElementById('end').style.display = "block"
+                            document.getElementById('final').innerHTML = count;
+                        } else {
+                            elem.innerHTML = timeLeft;
+                            timeLeft--;
+                        }
+                    }
+            }
+            
+            function play(){
+                
+                document.getElementById('enter').style.display = "none"
+                document.getElementById('play').style.display = "block"
+                if(check() === true){
+                    count++;
+                    document.getElementById('score').innerHTML = count;
+                    generateWord(words);
+                    document.getElementById('input-box').value = ''
+                }
+            }
+
+            
+
+            function generateWord(arr){
+                const randNum = Math.floor(Math.random()*words.length);
+                document.getElementById('word').innerHTML = arr[randNum];
+            }
+
+            function check(){
+                if(document.getElementById('input-box').value === document.getElementById('word').innerHTML){
+                    return true;
+                }
+            }
+
+            const words = [
+            'hat',
+            'river',
+            'lucky',
+            'statue',
+            'generate',
+            'stubborn',
+            'cocktail',
+            'runaway',
+            'joke',
+            'developer',
+            'establishment',
+            'hero',
+            'javascript',
+            'nutrition',
+            'revolver',
+            'echo',
+            'siblings',
+            'investigate',
+            'horrendous',
+            'symptom',
+            'laughter',
+            'magic',
+            'master',
+            'space',
+            'definition',
+            'day',
+            'football',
+            
+            ];
+        </script>
+    </body>
+</html>
